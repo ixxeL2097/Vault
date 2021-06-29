@@ -1,0 +1,19 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: vault-storage
+  labels:
+    app.kubernetes.io/instance: vault
+    app.kubernetes.io/name: vault
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+storageClassName: ""
+volumeMode: Filesystem
+volumeName: vault-storage-pv
+selector:
+  matchLabels:
+    type: vault-storage

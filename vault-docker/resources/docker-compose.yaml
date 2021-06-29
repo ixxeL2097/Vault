@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  vault:
+    image: vault:1.5.0
+    container_name: vault
+    hostname: vault-argo.devibm.local
+    ports:
+      - "8200:8200"
+    restart: always
+    environment:
+    - VAULT_CACERT=/etc/certs/CA.pem
+    - VAULT_CLIENT_CERT=/etc/certs/vault.pem
+    - VAULT_CLIENT_KEY=/etc/certs/private.pem
+    - VAULT_ADDR=https://vault-argo.devibm.local:8200
+    volumes:
+      - ./volumes/logs:/vault/logs:rw
+      - ./volumes/data:/vault/data:rw
+      - ./volumes/policies:/vault/policies:rw
+      - ./volumes/config:/vault/config:rw
+      - ./certs/CA.pem:/etc/certs/CA.pem
+      - ./certs/server.pem:/etc/certs/vault.pem
+      - ./certs/private.pem:/etc/certs/private.pem
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.json

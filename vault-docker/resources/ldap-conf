@@ -1,0 +1,11 @@
+vault write auth/ldap/config \
+url="ldap://ad-dev.devibm.local:389" \
+userattr="sAMAccountName" \
+userdn="dc=devibm,dc=local" \
+groupfilter="(&(objectClass=group)(member:1.2.840.113556.1.4.1941:={{.UserDN}}))" \
+groupdn="dc=devibm,dc=local" \
+binddn="cn=vault_ldap,cn=Users,dc=devibm,dc=local" \
+bindpass='Passw0rd#' \
+insecure_tls="true" \
+case_sensitive_names="false" \
+starttls="false"

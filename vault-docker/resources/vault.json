@@ -1,0 +1,20 @@
+{
+    "backend": {
+      "file": {
+        "path": "/vault/data"
+      }
+    },
+    "listener": {
+      "tcp":{
+        "address": "0.0.0.0:8200",
+        "tls_cert_file": "/etc/certs/vault.pem",
+        "tls_key_file": "/etc/certs/private.pem",
+        "tls_client_ca_file": "/etc/certs/CA.pem"
+      }
+    },
+    "ui": true,
+    "default_lease_ttl": "168h",
+    "max_lease_ttl": "720h",
+    "disable_mlock": false,
+    "log_level": "debug"
+  }
