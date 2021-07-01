@@ -1,0 +1,26 @@
+version: '3.6'
+services:
+  vault:
+    image: vault:1.7.3
+    container_name: vault
+    hostname: ${FQDN}
+    ports:
+      - "8200:8200"
+    restart: always
+    environment:
+    - VAULT_CACERT=/etc/certs/vault.pem
+    - VAULT_CLIENT_CERT=/etc/certs/vault.pem
+    - VAULT_CLIENT_KEY=/etc/certs/private.pem
+    - VAULT_ADDR=${FQDN}
+    volumes:
+      - ${VAULT_HOME}/logs:/vault/logs:rw
+      - ${VAULT_HOME}/data:/vault/data:rw
+      - ${VAULT_HOME}/policies:/vault/policies:rw
+      - ${VAULT_HOME}/config:/vault/config:rw
+      - ${CERTS}/server.crt:/etc/certs/vault.crt
+      - ${CERTS}/server.key:/etc/certs/vault.key
+      - ${CERTS}/server.pem:/etc/certs/vault.pem
+      - ${CERTS}/private.pem:/etc/certs/private.pem
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config=/vault/config/vault.json

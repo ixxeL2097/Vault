@@ -1,0 +1,72 @@
+# Generation of Kubernetes YAML is still under development!
+#
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-3.1.2
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2021-06-30T12:14:54Z"
+  labels:
+    app: pod-vault
+  name: pod-vault
+spec:
+  containers:
+  - args:
+    - vault
+    - server
+    - -config=/vault/config/vault.json
+    command:
+    - docker-entrypoint.sh
+    env:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: container
+      value: podman
+    #image: docker.io/library/vault:latest
+    image: jfrog-argo.devibm.local:3443/docker-general-s3p1/vault:1.7.3
+    name: vault
+    ports:
+    - containerPort: 8200
+      hostPort: 8200
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities:
+        add:
+        - CAP_IPC_LOCK
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      privileged: false
+      readOnlyRootFilesystem: false
+      seLinuxOptions: {}
+    stdin: true
+    tty: true
+    volumeMounts:
+    - mountPath: /vault/config
+      name: home-fred-Documents-TEST-docker-vault-compose-home-config-host
+    - mountPath: /vault/file
+      name: data
+    - mountPath: /vault/logs
+      name: logs
+    workingDir: /
+  dnsConfig: {}
+  restartPolicy: Never
+  volumes:
+  - hostPath:
+      path: /home/fred/Documents/TEST/docker/vault-compose/home/config
+      type: Directory
+    name: home-fred-Documents-TEST-docker-vault-compose-home-config-host
+  - name: data
+    persistentVolumeClaim:
+      claimName: data
+  - name: logs
+    persistentVolumeClaim:
+      claimName: logs
+status: {}
