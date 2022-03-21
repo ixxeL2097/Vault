@@ -111,5 +111,23 @@ If you prefer to have a customized token value, you can add the flag `-id` to yo
 vault token create -role=orchestrator -id <token-value>
 ```
 
+## Revoke
+
+you can list token accessor with the command:
+```
+vault list auth/token/accessors
+```
+
+and when authenticated, you can review your token information:
+```
+vault token lookup
+```
+
+To revoke a token, use the accessor id:
+```
+vault token revoke -accessor <accessor>
+```
+
+
 
 
