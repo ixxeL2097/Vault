@@ -118,7 +118,7 @@ you can list token accessor with the command:
 vault list auth/token/accessors
 ```
 
-and when authenticated, you can review your token information:
+and when authenticated, you can review your own token information:
 ```
 vault token lookup
 ```
@@ -127,7 +127,7 @@ or you can review a specific token by accessor id (limited information):
 vault token lookup -accessor <accessor>
 ```
 
-To revoke a token, use the accessor id:
+To revoke a token, use the accessor id (do not delete your own token):
 ```
 vault token revoke -accessor <accessor>
 ```
