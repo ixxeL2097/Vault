@@ -122,6 +122,10 @@ and when authenticated, you can review your token information:
 ```
 vault token lookup
 ```
+or you can review a specific token by accessor id (limited information):
+```
+vault token lookup -accessor <accessor>
+```
 
 To revoke a token, use the accessor id:
 ```
